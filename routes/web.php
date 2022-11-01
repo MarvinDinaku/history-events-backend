@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventsController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('events', EventsController::class);
+Route::get('logout', function ()
+{
+    auth()->logout();
+    Session()->flush();
 
-Auth::routes();
+    return Redirect::to('/home');
+})->name('logout');
+
+Route::resource('events', EventsController::class)->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

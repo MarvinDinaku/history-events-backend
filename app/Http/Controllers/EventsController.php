@@ -124,7 +124,7 @@ class EventsController extends Controller
             $image->move($destinationPath, $profileImage);
            
         }else{
-             unset($input['image']);
+            $profileImage = $event->image;
         }
         $startDate = $request->get('date'); 
         $endDate = $parts = explode('-', now());
